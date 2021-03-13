@@ -61,6 +61,8 @@ func main() {
 		middleware.LogHTTP(
 			middleware.SwitchMethod(map[string]http.HandlerFunc{
 				"GET": func(rw http.ResponseWriter, r *http.Request) {
+					rw.Header().Set("Content-Type", "text/plain") // make sure that the client doesn't interpret the paste as html
+
 					var id int64
 					if _, err := fmt.Sscanf(r.URL.Path, "/paste/%d", &id); err != nil {
 						rw.WriteHeader(http.StatusBadRequest)
@@ -92,7 +94,6 @@ func main() {
 						return
 					}
 
-					rw.Header().Set("Content-Type", "text/plain") // make sure that the client doesn't interpret it as html
 					_, _ = rw.Write(content)
 				},
 				"POST": func(rw http.ResponseWriter, r *http.Request) {
