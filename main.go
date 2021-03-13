@@ -22,7 +22,7 @@ func main() {
 
 	db, err := sql.Open("sqlite3", dbPath)
 	if err != nil {
-		log.Panicf("Failed to open SQlite database: %v", err)
+		log.Panicf("Failed to open SQLite database: %v", err)
 	}
 
 	if _, err := db.Exec(`
